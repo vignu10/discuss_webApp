@@ -1,0 +1,56 @@
+<script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.8.3/firebase-app.js";
+    // TODO: Add SDKs for Firebase products that you want to use
+    // https://firebase.google.com/docs/web/setup#available-libraries
+  
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyC6uTjw4MYI0T7GghzGqsd1Ik_qZwHNtXc",
+      authDomain: "discussweb-68e35.firebaseapp.com",
+      projectId: "discussweb-68e35",
+      storageBucket: "discussweb-68e35.appspot.com",
+      messagingSenderId: "819810746345",
+      appId: "1:819810746345:web:a24a9fbe3be0cd96d41578"
+    };
+  
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    
+    var name=prompt("Enter your name");
+
+    function sendMessage(){
+        var message = document.getElementById("");
+        firebase.database().ref("messages").push().set({
+            "sender":myName,
+            "message":myMessage
+        });
+        return false;
+    }
+    firebase.database().ref("messages").on("child_added",function(snapshot){
+        var html="";
+        html+="<li>";
+            html+=snapshot.val().sender + ": "+ snapshot.val().message;
+        html+="</li>";
+
+        document.getElementById("messages").innerHTML += html;
+
+    });
+  </script>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form onsubmit="return sendMessage();" autocomplete="off">
+        <input id="message" placeholder="Enter message" autocomplete="off">
+        <input type="submit">
+    </form>
+    <ul id="messages"></ul>
+</body>
+</html>
